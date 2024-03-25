@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 const internsData = [
-  // Interns data array
   {
     name: "Intern 1",
     learningPath: "Product Design",
     tasks: [88, 92, 85, 90],
     score: 0,
     avatarUrl:
-      "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.webp?b=1&s=170667a&w=0&k=20&c=KtmKHyOE6MJV0w2DiGX8P4399KHNbZ3p8lCjTEabGcY=",
+      "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.webp?b=1&s=170667a&w=0&k=20&c=KtmKHyOE6MJV0w2DiGX8P4399KHNbZ3p8lCjTEabGcY="
   },
   {
     name: "Intern 2",
@@ -110,39 +109,35 @@ const internsData = [
     learningPath: "Web3",
     tasks: [84, 88, 91, 87],
     score: 0,
-    avatarUrl:
-      "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.webp?b=1&s=170667a&w=0&k=20&c=KtmKHyOE6MJV0w2DiGX8P4399KHNbZ3p8lCjTEabGcY=",
+    avatarUrl: "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.webp?b=1&s=170667a&w=0&k=20&c=KtmKHyOE6MJV0w2DiGX8P4399KHNbZ3p8lCjTEabGcY=",
   },
   {
     name: "Intern 14",
     learningPath: "Web3",
     tasks: [89, 90, 85, 88],
     score: 0,
-    avatarUrl:
-      "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.webp?b=1&s=170667a&w=0&k=20&c=KtmKHyOE6MJV0w2DiGX8P4399KHNbZ3p8lCjTEabGcY=",
+    avatarUrl: "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.webp?b=1&s=170667a&w=0&k=20&c=KtmKHyOE6MJV0w2DiGX8P4399KHNbZ3p8lCjTEabGcY=",
   },
   {
     name: "Intern 15",
     learningPath: "Web3",
     tasks: [87, 86, 91, 84],
     score: 0,
-    avatarUrl:
-      "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.webp?b=1&s=170667a&w=0&k=20&c=KtmKHyOE6MJV0w2DiGX8P4399KHNbZ3p8lCjTEabGcY=",
+    avatarUrl: "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.webp?b=1&s=170667a&w=0&k=20&c=KtmKHyOE6MJV0w2DiGX8P4399KHNbZ3p8lCjTEabGcY=",
   },
   {
     name: "Intern 16",
     learningPath: "Web3",
     tasks: [92, 88, 90, 85],
     score: 0,
-    avatarUrl:
-      "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.webp?b=1&s=170667a&w=0&k=20&c=KtmKHyOE6MJV0w2DiGX8P4399KHNbZ3p8lCjTEabGcY=",
+    avatarUrl: "https://media.istockphoto.com/id/1406197730/photo/portrait-of-a-young-handsome-indian-man.webp?b=1&s=170667a&w=0&k=20&c=KtmKHyOE6MJV0w2DiGX8P4399KHNbZ3p8lCjTEabGcY=",
   },
 ];
 
 const App = () => {
-  const [interns, setInterns] = useState([]); // State for filtered interns
-  const [selectedPath, setSelectedPath] = useState("Frontend"); // State for selected learning path
-  const [topThree, setTopThree] = useState([]); // State for top three interns
+  const [interns, setInterns] = useState([]);
+  const [selectedPath, setSelectedPath] = useState("Frontend");
+  const [topThree, setTopThree] = useState([]);
 
   useEffect(() => {
     handlePathFilter(selectedPath);
@@ -164,84 +159,72 @@ const App = () => {
 
   return (
     <div className="container">
-      <header className="header">
-        <div className="container">
-          <h1>Interns Dashboard</h1>
-          <nav className="btns">
-            <button className="btn btn-main" onClick={() => handlePathFilter("Frontend")}>
-              Frontend
-            </button>
-            <button className="btn" onClick={() => handlePathFilter("Product Design")}>
-              Product Design
-            </button>
-            <button className="btn" onClick={() => handlePathFilter("Backend")}>Backend</button>
-            <button className="btn" onClick={() => handlePathFilter("Web3")}>Web3</button>
-          </nav>
-        </div>
-      </header>
+      {/* Filter Buttons */}
+      <div className="buttons-container">
+        {["Frontend", "Product Design", "Backend", "Web3"].map((path) => (
+          <button key={path} onClick={() => handlePathFilter(path)}>
+            {path}
+          </button>
+        ))}
+      </div>
 
-      <main className="main">
-        <section className="top-interns">
-          <div className="intern-cards">
-            {topThree.length > 0 ? (
-              topThree.map((intern) => (
-                <article key={intern.name} className="intern-card">
-                  <div className="avatar">
-                    <img src={intern.avatarUrl} alt={intern.name} />
-                  </div>
-                  <div className="intern-info">
-                    <h3>{intern.name}</h3>
-                    <p>{intern.learningPath}</p>
-                    <p>Score: {getFinalScore(intern.tasks)}</p>
-                  </div>
-                </article>
-              ))
-            ) : (
-              <p>No interns to display</p>
-            )}
-          </div>
-        </section>
-
-        {interns.length > 0 && (
-          <section className="interns-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Rank</th>
-                  <th>Avatar</th>
-                  <th>Name</th>
-                  <th>Learning Path</th>
-                  <th>Task 1</th>
-                  <th>Task 2</th>
-                  <th>Task 3</th>
-                  <th>Task 4</th>
-                  <th>Score</th>
-                </tr>
-              </thead>
-              <tbody>
-                {interns.map((intern, index) => (
-                  <tr key={intern.name}>
-                    <td>{index + 1}</td>
-                    <td>
-                      <img
-                        className="avatar-img"
-                        src={intern.avatarUrl}
-                        alt={intern.name}
-                      />
-                    </td>
-                    <td>{intern.name}</td>
-                    <td>{intern.learningPath}</td>
-                    {intern.tasks.map((taskScore, taskIndex) => (
-                      <td key={taskIndex}>{taskScore}</td>
-                    ))}
-                    <td>{getFinalScore(intern.tasks)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </section>
+      {/* Top Three Interns Cards */}
+      <div className="top-three-container">
+        {topThree.length > 0 ? (
+          topThree.map((intern) => (
+            <div key={intern.name} className="card">
+              <div className="card-info">
+                <div className="position">{interns.indexOf(intern) + 1}st</div>
+                <div className="avatar">
+                  <img src={intern.avatarUrl} alt={intern.name} />
+                </div>
+                <div className="name">{intern.name}</div>
+                <div className="score">
+                  Score: {getFinalScore(intern.tasks)}
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No interns to display</p>
         )}
-      </main>
+      </div>
+
+      {/* Interns Table */}
+      {interns.length > 0 && (
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Avatar</th> {/* New Avatar column */}
+              <th>Name</th>
+              <th>Learning Path</th>
+              <th>Task 1</th>
+              <th>Task 2</th>
+              <th>Task 3</th>
+              <th>Task 4</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {interns.map((intern, index) => (
+              <tr key={intern.name}>
+                <td>{index + 1}</td>
+                <td>
+                  <img className="table-img" src={intern.avatarUrl} alt={intern.name} />
+                </td>{" "}
+                {/* Render the avatar image using the avatarUrl property */}
+                <td>{intern.name}</td>
+                <td>{intern.learningPath}</td>
+                {intern.tasks.map((taskScore, taskIndex) => (
+                  <td key={taskIndex}>{taskScore}</td>
+                ))}
+                <td>{getFinalScore(intern.tasks)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
